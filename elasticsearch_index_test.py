@@ -52,18 +52,11 @@ def index_data():
     with open(vocabulary_file, 'r') as f:
         vocabulary = json.load(f)
         bulk_data = []
-        # for word in vocabulary.keys():
-        #     bulk_data.append({
-        #         "_index": index_name,
-        #         "_source": {
-        #             "suggest_field": {
-        #                 "input": word
-        #             }
-        #         }
-        #     })
-        for word in vocabulary.keys():
-            bulk_data.append({
-                "suggest_field": word
+        bulk_data.append({"index": {"_index": index_name}})
+        bulk_data.append({
+             "suggest_field": {
+                 "input": word
+              }
             })
         try:
             # Use the Elasticsearch bulk API to efficiently index all the words
